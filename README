@@ -2,47 +2,16 @@ I got frustrated trying to find objects in runtime object models - so I created 
 
 You search for objects using a find utility. Then you can click on the retrieved objects to inspect them
 
-e.g.
+e.g. in the console do this kind of thing
 
-find.props('map', window.jQuery, 'jQuery')
-jQuery.fn.map -> (function) function ( callback ) {
-		return this.pushStack( jQuery.map(this, function( elem, i ) {
-			return callback.call( elem, i, elem );
-		}));
-	}
-jQuery.map -> (function) function ( elems, callback, arg ) {
-		var value, key, ret = [],
-			i = 0,
-			length = elems.length,
-			// jquery objects are treated as arrays
-			isArray = elems instanceof jQuery || length !== undefined && typeof length === "number" && ( ( length > 0 && elems[ 0 ] && elems[ length -1 ] ) || length === 0 || jQuery.isArray( elems ) ) ;
+//global search for all properties named home
+>>find.props('home');
 
-		// Go through the array, translating each of the items to their
-		if ( isArray ) {
-			for ( ; i < length; i++ ) {
-				value = callback( elems[ i ], i, arg );
+//search jquery for all properties named map
+>>find.props('map', jQuery, 'jQuery')
 
-				if ( value != null ) {
-					ret[ ret.length ] = value;
-				}
-			}
-
-		// Go through every key on the object,
-		} else {
-			for ( key in elems ) {
-				value = callback( elems[ key ], key, arg );
-
-				if ( value != null ) {
-					ret[ ret.length ] = value;
-				}
-			}
-		}
-
-		// Flatten any nested arrays
-		return ret.concat.apply( [], ret );
-	}
-
-
+//global search for all Dates
+>>find.instances(Date)
 
 Right now it doesn't work in old fashioned browsers like IE<9
 

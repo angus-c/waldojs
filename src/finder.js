@@ -14,17 +14,17 @@ javascript:(function(){
     });
   }
 
+  var dealWithIt = function(util, expected, findMe, options) {
+    (!expected || typeof findMe == expected) ?
+      traverse(util, findMe, options) :
+      console.error([findMe, 'must be', expected].join(' '));
+  }
+
   var tests = {
     'props': function(findMe, root, each) {return findMe == each},
     'instances': function(findMe, root, each) {return root[each] instanceof findMe},
     'values': function(findMe, root, each) {return root[each] === findMe},
     'valuesCoerced': function(findMe, root, each) {return root[each] == findMe}
-  }
-
-  var dealWithIt = function(util, expected, findMe, options) {
-    (!expected || typeof findMe == expected) ?
-      traverse(util, findMe, options) :
-      console.error([findMe, 'must be', expected].join(' '));
   }
 
   window.find={

@@ -36,6 +36,4 @@ javascript:(function(){
   }
 })();
 
-find.custom(function(findMe, root, each) {return root[each] == false && each == 'a'})
-
 

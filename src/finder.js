@@ -31,7 +31,7 @@ javascript:(function(){
     byPropName: function(findMe, options) {dealWithIt('propName', 'string', findMe, options);},
     byType: function(findMe, options) {dealWithIt('type', 'function', findMe, options);},
     byValue: function(findMe, options) {dealWithIt('value', null, findMe, options);},
-    byValuesCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);}
+    byValueCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);}
   }
 })();
 

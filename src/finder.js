@@ -1,30 +1,38 @@
 javascript:(function(){
-  var traverse = function(task, findMe, root, path){
-    var root= root || window;
-    var path=path || ((root==window) ? "window" : "");
+  var traverse = function(type, findMe, options) {
+    var options = options || {};
+    var root = options.root || window;
+    var path = options.path || ((root==window) ? "window" : "");
     var props = Object.keys(root);
-    props.forEach(function(each){
-      if(tasks[task](root, findMe, each)){
+    props.forEach(function(each) {
+      if (tests[type](findMe, root, each)){
         console.log([path, ".", each].join(""), "->",["(", typeof root[each], ")"].join(""), root[each]);
       }
-      if((""+root[each])=="[object Object]" && path.split(".").indexOf(each) == -1){
-        traverse(task, findMe, root[each], [path,each].join("."));
+      if((""+root[each])=="[object Object]" && (root[each] != root) && path.split(".").indexOf(each) == -1) {
+        traverse(type, findMe, {root: root[each], path: [path,each].join(".")});
       }
     });
   }
 
-  var tasks = {
-    'p':function(root, findMe, each) {return findMe == each},
-    'i':function(root, findMe, each) {return root[each] instanceof findMe}
+  var tests = {
+    'props': function(findMe, root, each) {return findMe == each},
+    'instances': function(findMe, root, each) {return root[each] instanceof findMe},
+    'values': function(findMe, root, each) {return root[each] === findMe},
+    'valuesCoerced': function(findMe, root, each) {return root[each] == findMe}
+  }
+
+  var dealWithIt = function(type, expected, findMe, options) {
+    (!expected || typeof findMe == expected) ?
+      traverse(type, findMe, options) :
+      console.error([findMe, 'must be', expected].join(' '));
   }
 
   window.find={
-    props: function(findMe, root, path) {
-      (typeof findMe == 'string') ? traverse('p', findMe, root, path) : throw Error(findme + 'must be a string');
-    },
-    instances: function(findMe,root,path) {
-      (typeof findMe == 'function') ? traverse('i', findMe, root, path) : throw Error(findme + 'must be a function');
-    }
+    props: function(findMe, options) {dealWithIt('props', 'string', findMe, options);},
+    instances: function(findMe, options) {dealWithIt('instances', 'function', findMe, options);},
+    values: function(findMe, options) {dealWithIt('values', null, findMe, options);},
+    valuesCoerced: function(findMe, options) {dealWithIt('valuesCoerced', null, findMe, options);}
   }
 })();
+
 

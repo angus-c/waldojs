@@ -21,17 +21,17 @@ javascript:(function(){
   }
 
   var tests = {
-    'props': function(findMe, root, each) {return findMe == each},
-    'instances': function(findMe, root, each) {return root[each] instanceof findMe},
-    'values': function(findMe, root, each) {return root[each] === findMe},
-    'valuesCoerced': function(findMe, root, each) {return root[each] == findMe}
+    'propName': function(findMe, root, each) {return findMe == each},
+    'type': function(findMe, root, each) {return root[each] instanceof findMe},
+    'value': function(findMe, root, each) {return root[each] === findMe},
+    'valueCoerced': function(findMe, root, each) {return root[each] == findMe}
   }
 
   window.find={
-    props: function(findMe, options) {dealWithIt('props', 'string', findMe, options);},
-    instances: function(findMe, options) {dealWithIt('instances', 'function', findMe, options);},
-    values: function(findMe, options) {dealWithIt('values', null, findMe, options);},
-    valuesCoerced: function(findMe, options) {dealWithIt('valuesCoerced', null, findMe, options);}
+    byPropName: function(findMe, options) {dealWithIt('propName', 'string', findMe, options);},
+    byType: function(findMe, options) {dealWithIt('type', 'function', findMe, options);},
+    byValue: function(findMe, options) {dealWithIt('value', null, findMe, options);},
+    byValuesCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);}
   }
 })();
 

@@ -1,15 +1,15 @@
 javascript:(function(){
-  var traverse = function(type, findMe, options) {
+  var traverse = function(util, findMe, options) {
     var options = options || {};
     var root = options.root || window;
     var path = options.path || ((root==window) ? "window" : "");
     var props = Object.keys(root);
     props.forEach(function(each) {
-      if (tests[type](findMe, root, each)){
+      if (tests[util](findMe, root, each)){
         console.log([path, ".", each].join(""), "->",["(", typeof root[each], ")"].join(""), root[each]);
       }
       if((""+root[each])=="[object Object]" && (root[each] != root) && path.split(".").indexOf(each) == -1) {
-        traverse(type, findMe, {root: root[each], path: [path,each].join(".")});
+        traverse(util, findMe, {root: root[each], path: [path,each].join(".")});
       }
     });
   }
@@ -21,9 +21,9 @@ javascript:(function(){
     'valuesCoerced': function(findMe, root, each) {return root[each] == findMe}
   }
 
-  var dealWithIt = function(type, expected, findMe, options) {
+  var dealWithIt = function(util, expected, findMe, options) {
     (!expected || typeof findMe == expected) ?
-      traverse(type, findMe, options) :
+      traverse(util, findMe, options) :
       console.error([findMe, 'must be', expected].join(' '));
   }
 

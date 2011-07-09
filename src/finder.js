@@ -20,10 +20,10 @@ javascript:(function(){
 
   window.find={
     props: function(findMe, root, path) {
-      (typeof findMe == 'string') && traverse('p', findMe, root, path);
+      (typeof findMe == 'string') ? traverse('p', findMe, root, path) : throw Error(findme + 'must be a string');
     },
     instances: function(findMe,root,path) {
-      (typeof findMe == 'function') && traverse('i', findMe, root, path);
+      (typeof findMe == 'function') ? traverse('i', findMe, root, path) : throw Error(findme + 'must be a function');
     }
   }
 })();

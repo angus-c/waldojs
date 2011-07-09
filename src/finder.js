@@ -5,7 +5,7 @@ javascript:(function(){
     var path = options.path || ((root==window) ? "window" : "");
     var props = Object.keys(root);
     props.forEach(function(each) {
-      if (tests[util](findMe, root, each)){
+      if ((tests[util] || util)(findMe, root, each)){
         console.log([path, ".", each].join(""), "->",["(", typeof root[each], ")"].join(""), root[each]);
       }
       if((""+root[each])=="[object Object]" && (root[each] != root) && path.split(".").indexOf(each) == -1) {
@@ -31,8 +31,11 @@ javascript:(function(){
     byPropName: function(findMe, options) {dealWithIt('propName', 'string', findMe, options);},
     byType: function(findMe, options) {dealWithIt('type', 'function', findMe, options);},
     byValue: function(findMe, options) {dealWithIt('value', null, findMe, options);},
-    byValueCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);}
+    byValueCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);},
+    custom: function(fn, options) {traverse(fn, null, options);}
   }
 })();
+
+find.custom(function(findMe, root, each) {return root[each] == false && each == 'a'})
 
 

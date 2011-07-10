@@ -1,37 +1,37 @@
 javascript:(function(){
-  var traverse = function(util, findMe, options) {
+  var traverse = function(util, searchTerm, options) {
     var options = options || {};
-    var root = options.root || window;
-    var path = options.path || ((root==window) ? "window" : "");
-    var props = Object.keys(root);
-    props.forEach(function(each) {
-      if ((tests[util] || util)(findMe, root, each)){
-        console.log([path, ".", each].join(""), "->",["(", typeof root[each], ")"].join(""), root[each]);
+    var obj = options.obj || window;
+    var path = options.path || ((obj==window) ? "window" : "");
+    var props = Object.keys(obj);
+    props.forEach(function(prop) {
+      if ((tests[util] || util)(searchTerm, obj, prop)){
+        console.log([path, ".", prop].join(""), "->",["(", typeof obj[prop], ")"].join(""), obj[prop]);
       }
-      if((""+root[each])=="[object Object]" && (root[each] != root) && path.split(".").indexOf(each) == -1) {
-        traverse(util, findMe, {root: root[each], path: [path,each].join(".")});
+      if((""+obj[prop])=="[object Object]" && (obj[prop] != obj) && path.split(".").indexOf(prop) == -1) {
+        traverse(util, searchTerm, {obj: obj[prop], path: [path,prop].join(".")});
       }
     });
   }
 
-  var dealWithIt = function(util, expected, findMe, options) {
-    (!expected || typeof findMe == expected) ?
-      traverse(util, findMe, options) :
-      console.error([findMe, 'must be', expected].join(' '));
+  var dealWithIt = function(util, expected, searchTerm, options) {
+    (!expected || typeof searchTerm == expected) ?
+      traverse(util, searchTerm, options) :
+      console.error([searchTerm, 'must be', expected].join(' '));
   }
 
   var tests = {
-    'propName': function(findMe, root, each) {return findMe == each},
-    'type': function(findMe, root, each) {return root[each] instanceof findMe},
-    'value': function(findMe, root, each) {return root[each] === findMe},
-    'valueCoerced': function(findMe, root, each) {return root[each] == findMe}
+    'propName': function(searchTerm, obj, prop) {return searchTerm == prop},
+    'type': function(searchTerm, obj, prop) {return obj[prop] instanceof searchTerm},
+    'value': function(searchTerm, obj, prop) {return obj[prop] === searchTerm},
+    'valueCoerced': function(searchTerm, obj, prop) {return obj[prop] == searchTerm}
   }
 
   window.find={
-    byPropName: function(findMe, options) {dealWithIt('propName', 'string', findMe, options);},
-    byType: function(findMe, options) {dealWithIt('type', 'function', findMe, options);},
-    byValue: function(findMe, options) {dealWithIt('value', null, findMe, options);},
-    byValueCoerced: function(findMe, options) {dealWithIt('valueCoerced', null, findMe, options);},
+    byPropName: function(searchTerm, options) {dealWithIt('propName', 'string', searchTerm, options);},
+    byType: function(searchTerm, options) {dealWithIt('type', 'function', searchTerm, options);},
+    byValue: function(searchTerm, options) {dealWithIt('value', null, searchTerm, options);},
+    byValueCoerced: function(searchTerm, options) {dealWithIt('valueCoerced', null, searchTerm, options);},
     custom: function(fn, options) {traverse(fn, null, options);}
   }
 })();

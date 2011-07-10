@@ -1,4 +1,4 @@
-javascript:(function(){
+(function(){
   var traverse = function(util, searchTerm, options) {
     var options = options || {};
     var obj = options.obj || window;

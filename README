@@ -21,7 +21,7 @@ e.g. in the console do this kind of thing
 
 //search with a custom function 
 //e.g. all truthy properties named 'a'...
->>find.custom(function(searchTerm, obj, prop) {return (obj[prop] == true) || (prop == 'a')});
+>>find.custom(function(searchTerm, obj, prop) {return (obj[prop] == true) && (prop == 'a')});
 
 Right now it doesn't work in old fashioned browsers like IE<9
 

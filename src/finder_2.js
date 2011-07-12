@@ -1,4 +1,4 @@
-//alternate version by J Dalton
+//alternate version by John-David Dalton <http://allyoucanleet.com/>
 //1) works in IE 8
 //2) allows repeating prop names in path
 //3) does not risk exceeding stack limit

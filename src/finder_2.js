@@ -2,6 +2,7 @@
 //1) works in IE 8
 //2) allows repeating prop names in path
 //3) does not risk exceeding stack limit
+//4) logs circular/shared references w/ indicator
 
 (function(window) {
 

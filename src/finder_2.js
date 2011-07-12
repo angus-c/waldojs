@@ -1,5 +1,7 @@
 /*
 Copyright (C) 2011 by Angus Croll and John-David Dalton
+http://javascriptweblog.wordpress.com
+http://allyoucanleet.com
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

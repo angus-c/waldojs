@@ -44,8 +44,8 @@ THE SOFTWARE.
   }
 
   var tests = {
-    'name': function(searchTerm, obj, prop) {searchTerm == prop},
-    'nameContains': function(searchTerm, obj, prop) {prop.indexOf(searchTerm)>-1},
+    'name': function(searchTerm, obj, prop) {return searchTerm == prop},
+    'nameContains': function(searchTerm, obj, prop) {return prop.indexOf(searchTerm)>-1},
     'type': function(searchTerm, obj, prop) {return obj[prop] instanceof searchTerm},
     'value': function(searchTerm, obj, prop) {return obj[prop] === searchTerm},
     'valueCoerced': function(searchTerm, obj, prop) {return obj[prop] == searchTerm}

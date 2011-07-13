@@ -44,14 +44,16 @@ THE SOFTWARE.
   }
 
   var tests = {
-    'propName': function(searchTerm, obj, prop) {return searchTerm == prop},
+    'name': function(searchTerm, obj, prop) {searchTerm == prop},
+    'nameContains': function(searchTerm, obj, prop) {prop.indexOf(searchTerm)>-1},
     'type': function(searchTerm, obj, prop) {return obj[prop] instanceof searchTerm},
     'value': function(searchTerm, obj, prop) {return obj[prop] === searchTerm},
     'valueCoerced': function(searchTerm, obj, prop) {return obj[prop] == searchTerm}
   }
 
   window.find={
-    byPropName: function(searchTerm, options) {dealWithIt('propName', 'string', searchTerm, options);},
+    byName: function(searchTerm, options) {dealWithIt('name', 'string', searchTerm, options);},
+    byNameContains: function(searchTerm, options) {dealWithIt('nameContains', 'string', searchTerm, options);},
     byType: function(searchTerm, options) {dealWithIt('type', 'function', searchTerm, options);},
     byValue: function(searchTerm, options) {dealWithIt('value', null, searchTerm, options);},
     byValueCoerced: function(searchTerm, options) {dealWithIt('valueCoerced', null, searchTerm, options);},

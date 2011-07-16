@@ -14,7 +14,7 @@ Available under MIT license <http://mths.be/mit>
       if ((tests[util] || util)(searchTerm, obj, prop)){
         console.log([path, ".", prop].join(""), "->",["(", typeof obj[prop], ")"].join(""), obj[prop]);
       }
-      if((""+obj[prop])=="[object Object]" && (obj[prop] != obj) && path.split(".").indexOf(prop) == -1) {
+      if(Object.prototype.toString.call(obj[prop])=="[object Object]" && (obj[prop] != obj) && path.split(".").indexOf(prop) == -1) {
         traverse(util, searchTerm, {obj: obj[prop], path: [path,prop].join(".")});
       }
     });

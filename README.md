@@ -30,3 +30,18 @@ find.byValueCoerced(false);
 //e.g. all truthy properties named 'a'...
 find.custom(function(searchTerm, obj, prop) {return (obj[prop] == true) && (prop == 'a')});
 ```
+
+####circular references
+
+Waldo now detects circular references and cites them:  
+
+```js
+var a = {b: 3};
+var c = {d: a};
+find.byName('d');
+```
+
+will log...  
+```
+global.c.d -> (<global.a>) Object {b: 3} 
+```

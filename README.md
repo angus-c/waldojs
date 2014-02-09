@@ -12,7 +12,7 @@ e.g. in the console do this kind of thing
 find.byName('home');
 
 //search jquery for all properties named 'map'
-find.byName('map', jQuery, 'jQuery')
+find.byName('map', {obj: jQuery, path: 'jQuery'})
 
 //global search for all property names containing 'box' as a substring
 find.byNameContains('box');
@@ -26,11 +26,10 @@ find.byValue(1000);
 //all falsey values
 find.byValueCoerced(false);
 
-//search with a custom function 
+//search with a custom function
 //e.g. all truthy properties named 'a'...
 find.custom(function(searchTerm, obj, prop) {return (obj[prop] == true) && (prop == 'a')});
 ```
-
 ####circular references
 
 Waldo now detects circular references and cites them:  
@@ -45,3 +44,5 @@ will log...
 ```
 global.c.d -> (<global.a>) Object {b: 3} 
 ```
+
+Thanks to [John-David Dalton](https://github.com/jdalton) for infrastructure improvements.

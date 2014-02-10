@@ -71,5 +71,15 @@ describe("waldo", function() {
       expect(console.log).not.toHaveBeenCalledWith();
     });
   });
-  //TODO: test custome filters
+  describe("findByCustomeFilter", function() {
+    it("should return custom filter matches", function() {
+      find.custom(function(searchTerm, obj, prop) {return (obj[prop] === 1) && (prop == 'num')});
+      expect(console.log).toHaveBeenCalledWith('global.testObj.num', '->', '(number)', 1);
+    });
+    it("should report no matches when no custom filter matches", function() {
+      find.custom(function(searchTerm, obj, prop) {return (obj[prop] === 1) && (prop == 'pie')});
+      expect(console.log).not.toHaveBeenCalled();
+    });
+    //TODO: test searchTerm param
+  });
 });

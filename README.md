@@ -2,8 +2,6 @@
 
 ###Waldo
 
-http://javascriptweblog.wordpress.com/2011/07/11/waldo-search-the-javascript-runtime-in-under-1-kb/
-
 I got frustrated trying to find objects in runtime object models – so I created a utility to do it.
 You search for objects using a find utility. Then you can click on the retrieved objects to inspect them.
 

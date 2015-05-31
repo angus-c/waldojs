@@ -1,7 +1,27 @@
 {
   "name": "waldo",
-  "version": "0.0.1",
+  "version": "0.0.2",
+  "description": "find objects",
+  "author": "Angus Croll",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/angus-c/waldo.git"
+  },
+  "scripts": {
+    "test": "./node_modules/karma/bin/karma start --single-run",
+    "testc": "./node_modules/karma/bin/karma start --auto-watch"
+  },
+  "keywords": [
+    "javascript",
+    "find",
+    "match",
+    "search"
+  ],
+
   "devDependencies": {
+    "eslint": "^0.21.2",
+    "eslint-plugin-react": "^2.3.0",
     "karma": "~0.10.1",
     "karma-jasmine": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",

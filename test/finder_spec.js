@@ -10,7 +10,6 @@ window.testObj = {
 window.testObj.circ = {a:3, b: window.testObj.obj};
 var logSpy;
 
-
 describe("waldo", function() {
   beforeEach(function() {
     logSpy = spyOn(console, 'log').andCallThrough();

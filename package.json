@@ -25,11 +25,12 @@
     "babel-runtime": "^5.4.7",
     "eslint": "^0.21.2",
     "eslint-plugin-react": "^2.3.0",
-    "karma": "~0.10.1",
-    "karma-chrome-launcher": "~0.1.0",
-    "karma-firefox-launcher": "~0.1.0",
-    "karma-jasmine": "~0.1.0",
-    "node-libs-browser": "^0.5.2",
-    "webpack": "^1.9.10"
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.12.35",
+    "karma-chrome-launcher": "^0.1.8",
+    "karma-firefox-launcher": "^0.1.4",
+    "karma-jasmine": "^0.3.5",
+    "karma-sourcemap-loader": "^0.3.4",
+    "karma-webpack": "^1.5.0"
   }
 }

@@ -1,3 +1,5 @@
+import find from '../src/finder'
+
 //dummy objects
 window.testObj = {
   obj: {d: 4},
@@ -12,7 +14,7 @@ var logSpy;
 
 describe("waldo", function() {
   beforeEach(function() {
-    logSpy = spyOn(console, 'log').andCallThrough();
+    logSpy = spyOn(console, 'log').and.callThrough();
   });
   describe("findByName", function() {
     it("should find root level object", function() {
@@ -37,7 +39,7 @@ describe("waldo", function() {
       find.byType(Array, {obj: window.testObj, path: 'testObj'});
       //TODO need to check for multiple matches
       expect(console.log).toHaveBeenCalledWith('testObj.arr1', '->', '(object)', window.testObj.arr1);
-      logSpy.reset();
+      logSpy.calls.reset();
       find.byType(Function, {obj: window.testObj, path: 'testObj'});
       expect(console.log).toHaveBeenCalledWith('testObj.fn', '->', '(function)', window.testObj.fn);
     });

@@ -9,8 +9,6 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // 'src/finder_min.js',
-      'lib/waldo.js',
       'test/finder_spec.js'
     ],
 
@@ -50,6 +48,30 @@ module.exports = function (config) {
 
     // Continuous Integration mode
     // if true, it capture browsers, run tests and exit
-    singleRun: false
+    singleRun: false,
+
+    frameworks: ['jasmine'],
+
+    preprocessors: {
+      'src/*.js': ['webpack', 'sourcemap'],
+      'test/*spec.js': ['webpack', 'sourcemap']
+    },
+
+    plugins: [
+      'karma-chrome-launcher',
+      'karma-firefox-launcher',
+      'karma-jasmine',
+      'karma-sourcemap-loader',
+      'karma-webpack'
+    ],
+
+    webpack: {
+      module: {
+        loaders: [
+          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?optional=runtime' }
+        ]
+      },
+      watch: true
+    }
   });
 };

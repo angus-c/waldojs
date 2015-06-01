@@ -121,4 +121,4 @@
       traverse(fn, null, options);
     }
   };
-})(this);
+})(window || global);

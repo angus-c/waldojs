@@ -18,13 +18,18 @@
     "match",
     "search"
   ],
-
   "devDependencies": {
+    "babel": "^5.4.7",
+    "babel-core": "^5.4.7",
+    "babel-loader": "^5.1.3",
+    "babel-runtime": "^5.4.7",
     "eslint": "^0.21.2",
     "eslint-plugin-react": "^2.3.0",
     "karma": "~0.10.1",
-    "karma-jasmine": "~0.1.0",
     "karma-chrome-launcher": "~0.1.0",
-    "karma-firefox-launcher": "~0.1.0"
+    "karma-firefox-launcher": "~0.1.0",
+    "karma-jasmine": "~0.1.0",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.9.10"
   }
 }

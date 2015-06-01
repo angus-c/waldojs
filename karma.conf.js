@@ -9,8 +9,8 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
-      // 'lib/finder_min.js',
-      'lib/finder.js',
+      // 'src/finder_min.js',
+      'lib/waldo.js',
       'test/finder_spec.js'
     ],
 

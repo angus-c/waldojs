@@ -1,33 +1,29 @@
 function dealWithIt(util, expected, searchTerm, options) {
   // integrity check arguments
-  (!expected || typeof searchTerm == expected)
-    ? traverse(util, searchTerm, options)
-    : console.error(searchTerm + ' must be ' + expected);
+  !expected || typeof searchTerm == expected ?
+    traverse(util, searchTerm, options) :
+    console.error(searchTerm, ' must be ', expected);
 }
 
-function traverse(util, searchTerm, options) {
+function traverse(util, searchTerm, {obj = window || global, path} = {}) {
   util = tests[util] || util;
-  options || (options = {});
 
-  var data;
-  var alreadySeen;
+  let data;
+  let alreadySeen;
 
-  var obj = options.obj || global;
-  var ownProp = options.hasOwnProperty;
-  var path = options.path || ((obj == global) ? 'global' : '');
-  var queue = [{ 'obj': obj, 'path': path }];
-  var seen = [];
+  path || (path = (obj == global) ? 'global' : '');
+  let queue = [{ obj, path }];
+  let seen = [];
 
   // a non-recursive solution to avoid call stack limits
   // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4
   while ((data = queue.pop())) {
-    obj = data.obj;
-    path = data.path;
+    let {obj, path} = data;
 
-    for (var prop in obj) {
+    for (const prop in obj) {
       // IE may throw errors when accessing/coercing some properties
       try {
-        if (ownProp.call(obj, prop)) {
+        if (obj.hasOwnProperty(prop)) {
           // inspect objects
           if ([obj[prop]] == '[object Object]') {
             // check if already searched (prevents circular references)
@@ -37,18 +33,15 @@ function traverse(util, searchTerm, options) {
             );
             // add to stack
             if (!alreadySeen) {
-              data = { 'obj': obj[prop], 'path': path + '.' + prop };
+              data = { 'obj': obj[prop], 'path': `${path}.${prop}`};
               queue.push(data);
               seen.push(data);
             }
           }
           // if match detected, log it
           if (util(searchTerm, obj, prop)) {
-            console.log(
-              path + '.' + prop,
-              '->',
-              '(' + (alreadySeen ? '<' + alreadySeen.path + '>' : typeof obj[prop]) + ')',
-              obj[prop]);
+            const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
+            console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
           }
         }
       } catch(e) { }

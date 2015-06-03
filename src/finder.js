@@ -1,12 +1,30 @@
-function dealWithIt(util, expected, searchTerm, options) {
+export default find = {
+  byName(searchTerm, options) {
+    searchMaybe('propName', 'string', searchTerm, options);
+  },
+  byType(searchTerm, options) {
+    searchMaybe('type', 'function', searchTerm, options);
+  },
+  byValue(searchTerm, options) {
+    searchMaybe('value', null, searchTerm, options);
+  },
+  byValueCoerced(searchTerm, options) {
+    searchMaybe('valueCoerced', null, searchTerm, options);
+  },
+  custom(fn, options) {
+    searchMaybe(fn, null, options);
+  }
+}
+
+function searchMaybe(util, expected, searchTerm, options) {
   // integrity check arguments
   !expected || typeof searchTerm == expected ?
-    traverse(util, searchTerm, options) :
+    search(util, searchTerm, options) :
     console.error(searchTerm, ' must be ', expected);
 }
 
-function traverse(util, searchTerm, {obj = window || global, path} = {}) {
-  util = tests[util] || util;
+function search(util, searchTerm, {obj = window || global, path} = {}) {
+  util = searchBy[util] || util;
 
   let data;
   let alreadySeen;
@@ -80,7 +98,7 @@ function like(x, y) {
   }
 }
 
-const tests = {
+const searchBy = {
   propName(searchTerm, obj, prop) {
     return searchTerm == prop;
   },
@@ -94,24 +112,3 @@ const tests = {
     return obj[prop] == searchTerm;
   }
 };
-
-// public methods
-const find = {
-  byName(searchTerm, options) {
-    dealWithIt('propName', 'string', searchTerm, options);
-  },
-  byType(searchTerm, options) {
-    dealWithIt('type', 'function', searchTerm, options);
-  },
-  byValue(searchTerm, options) {
-    dealWithIt('value', null, searchTerm, options);
-  },
-  byValueCoerced(searchTerm, options) {
-    dealWithIt('valueCoerced', null, searchTerm, options);
-  },
-  custom(fn, options) {
-    traverse(fn, null, options);
-  }
-}
-
-export default find;

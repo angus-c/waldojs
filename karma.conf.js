@@ -53,6 +53,7 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
 
     preprocessors: {
+      'lib/*.js': ['webpack', 'sourcemap'],
       'src/*.js': ['webpack', 'sourcemap'],
       'test/*spec.js': ['webpack', 'sourcemap']
     },

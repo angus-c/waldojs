@@ -9,7 +9,10 @@
     "url": "https://github.com/angus-c/waldo.git"
   },
   "scripts": {
-    "test": "./node_modules/karma/bin/karma start --single-run",
+    "compile": "babel --optional runtime src --out-dir lib",
+    "minify": "minify lib/finder.js",
+    "prepublish": "npm run compile && npm run minify && cp src/finder.js lib/finder.es6.js",
+    "test": "npm run prepublish && ./node_modules/karma/bin/karma start --single-run",
     "testc": "./node_modules/karma/bin/karma start --auto-watch"
   },
   "keywords": [
@@ -31,6 +34,7 @@
     "karma-firefox-launcher": "^0.1.4",
     "karma-jasmine": "^0.3.5",
     "karma-sourcemap-loader": "^0.3.4",
-    "karma-webpack": "^1.5.0"
+    "karma-webpack": "^1.5.0",
+    "minifier": "^0.6.2"
   }
 }

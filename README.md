@@ -50,6 +50,5 @@ Thanks to [John-David Dalton](https://github.com/jdalton) for infrastructure imp
 ###Testing
 
 ```
-make build
 npm test
 ```

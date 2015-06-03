@@ -46,3 +46,10 @@ global.c.d -> (<global.a>) Object {b: 3}
 ```
 
 Thanks to [John-David Dalton](https://github.com/jdalton) for infrastructure improvements.
+
+###Testing
+
+```
+make build
+npm test
+```

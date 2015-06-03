@@ -5,10 +5,13 @@
     "mocha": true,
     "node": true
   },
+  "ecmaFeatures": {
+    modules: true
+  },
   "globals": {
     "assert": true,
     "expect": true,
-    "GeneratorFunction": true
+    "spyOn": true
   },
   "rules": {
     // based on https://github.com/feross/standard

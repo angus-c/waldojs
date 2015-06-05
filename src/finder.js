@@ -36,6 +36,8 @@ function search(util, searchTerm, {obj = window || global, path} = {}) {
   let queue = [{ obj, path }];
   let seen = [];
 
+  debugger;
+
   let query = new Query(util, searchTerm, path);
 
   // a non-recursive solution to avoid call stack limits
@@ -64,11 +66,13 @@ function search(util, searchTerm, {obj = window || global, path} = {}) {
           // if match detected, log it
           if (util(searchTerm, obj, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
-            query.addMatch(new Match(path, obj, prop, type))
+            query.addMatch(new Match({path, obj, prop, type}));
             console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
           }
         }
-      } catch(e) { }
+      } catch(e) {
+        console.warn(e);
+      }
     }
   }
 

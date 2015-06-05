@@ -1,3 +1,4 @@
+import src from '../src/finder';
 import maxified from '../lib/finder';
 import minified from '../lib/finder.min';
 import es6ified from '../lib/finder.es6.js';
@@ -16,7 +17,7 @@ global.testObj = {
 global.testObj.circ = {a: 3, b: global.testObj.obj};
 let logSpy;
 
-[maxified, minified, es6ified].forEach(find => {
+[src].forEach(find => {
   describe('waldo', () => {
     beforeEach(() => {
       logSpy = spyOn(console, 'log').and.callThrough();

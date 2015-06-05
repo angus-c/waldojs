@@ -1,3 +1,6 @@
+import Query from './query';
+import Match from './match';
+
 export default find = {
   byName(searchTerm, options) {
     searchMaybe('propName', 'string', searchTerm, options);
@@ -33,6 +36,8 @@ function search(util, searchTerm, {obj = window || global, path} = {}) {
   let queue = [{ obj, path }];
   let seen = [];
 
+  let query = new Query(util, searchTerm, path);
+
   // a non-recursive solution to avoid call stack limits
   // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4
   while ((data = queue.pop())) {
@@ -59,12 +64,15 @@ function search(util, searchTerm, {obj = window || global, path} = {}) {
           // if match detected, log it
           if (util(searchTerm, obj, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
+            query.addMatch(new Match(path, obj, prop, type))
             console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
           }
         }
       } catch(e) { }
     }
   }
+
+  return query;
 }
 
 // based on http://stackoverflow.com/a/6713782

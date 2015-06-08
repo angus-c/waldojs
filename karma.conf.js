@@ -4,9 +4,6 @@ module.exports = function (config) {
     // base path, that will be used to resolve files and exclude
     basePath: '',
 
-    // frameworks to use
-    frameworks: ['jasmine'],
-
     // list of files / patterns to load in the browser
     files: [
       'test/finder_spec.js'
@@ -53,7 +50,7 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
 
     preprocessors: {
-      'lib/*.js': ['webpack', 'sourcemap'],
+      'lib/finder.es6*.js': ['webpack', 'sourcemap'],
       'src/*.js': ['webpack', 'sourcemap'],
       'test/*spec.js': ['webpack', 'sourcemap']
     },
@@ -69,7 +66,13 @@ module.exports = function (config) {
     webpack: {
       module: {
         loaders: [
-          { test: /\.js$/, exclude: /node_modules/, loader: 'babel-loader?optional=runtime' }
+          {
+            // es6 JavaScript
+            test: /\.js$/,
+            loader: 'babel-loader',
+            exclude: 'node_modules',
+            query: { cacheDirectory: true }
+          }
         ]
       },
       watch: true

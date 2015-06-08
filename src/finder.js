@@ -1,7 +1,7 @@
 import Query from './query';
 import Match from './match';
 
-export default find = {
+let waldo = {
   byName(searchTerm, options) {
     searchMaybe('propName', 'string', searchTerm, options);
   },
@@ -32,11 +32,10 @@ function search(util, searchTerm, {obj = window || global, path} = {}) {
   let data;
   let alreadySeen;
 
+  debugger;
   path || (path = (obj == global) ? 'global' : '');
   let queue = [{ obj, path }];
   let seen = [];
-
-  debugger;
 
   let query = new Query(util, searchTerm, path);
 
@@ -124,3 +123,5 @@ const searchBy = {
     return obj[prop] == searchTerm;
   }
 };
+
+export default waldo;

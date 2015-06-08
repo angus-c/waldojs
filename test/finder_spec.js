@@ -1,8 +1,6 @@
 import src from '../src/finder';
 import waldo from '../lib/waldo';
-import maxified from '../lib/finder';
-import minified from '../lib/finder.min';
-import es6ified from '../lib/finder.es6.js';
+import waldoMin from '../lib/waldo.min';
 
 const global = window || global;
 
@@ -18,7 +16,7 @@ global.testObj = {
 global.testObj.circ = {a: 3, b: global.testObj.obj};
 let logSpy;
 
-[src, waldo].forEach(find => {
+[src, waldo, waldoMin].forEach(find => {
   describe('waldo', () => {
     beforeEach(() => {
       logSpy = spyOn(console, 'log').and.callThrough();

@@ -18,6 +18,9 @@ export default {
   },
   custom(fn, options) {
     searchMaybe(fn, null, options);
+  },
+  debug(enabled) {
+    global.DEBUG = enabled;
   }
 }
 
@@ -67,7 +70,9 @@ function search(util, searchTerm, {obj = global, path} = {}) {
           if (util(searchTerm, obj, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
             query.addMatch(new Match({path, obj, prop, type}));
-            console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
+            if (global.DEBUG) {
+              console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
+            }
           }
         }
       } catch(e) {

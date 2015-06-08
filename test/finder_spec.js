@@ -14,16 +14,17 @@ global.testObj = {
 }
 
 global.testObj.circ = {a: 3, b: global.testObj.obj};
-let logSpy, checkConsoleLog;
+let logSpy, checkConsoleLog, query;
 
 [src, waldo, waldoMin].forEach(find => {
-  [true, false].forEach(debugMode => {
-    find.debug(debugMode);
+  [false, true].forEach(debug => {
+    find.debug(debug);
+
     describe('waldo', () => {
       beforeEach(() => {
         logSpy = spyOn(console, 'log').and.callThrough();
-        checkConsoleLog = (str) => {
-          if (debugMode) {
+        checkConsoleLog = str => {
+          if (debug) {
             expect(console.log).toHaveBeenCalledWith(str);
           }
         }
@@ -31,15 +32,18 @@ let logSpy, checkConsoleLog;
 
       describe('findByName', () => {
         it('should find root level object', () => {
-          find.byName('circ');
+          query = find.byName('circ');
+          expect(query.matches.length).toEqual(1);
           checkConsoleLog(
             `global.testObj.circ -> (object) ${global.testObj.circ}`);
         });
+
         it('should find root level array', () => {
           find.byName('arr1');
           checkConsoleLog(
             `global.testObj.arr1 -> (object) ${global.testObj.arr1}`);
         });
+
         it('should find nested property', () => {
           find.byName('a');
           checkConsoleLog(

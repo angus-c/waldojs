@@ -5,19 +5,19 @@ const global = window || global;
 
 export default {
   byName(searchTerm, options) {
-    searchMaybe('propName', 'string', searchTerm, options);
+    return searchMaybe('propName', 'string', searchTerm, options);
   },
   byType(searchTerm, options) {
-    searchMaybe('type', 'function', searchTerm, options);
+    return searchMaybe('type', 'function', searchTerm, options);
   },
   byValue(searchTerm, options) {
-    searchMaybe('value', null, searchTerm, options);
+    return searchMaybe('value', null, searchTerm, options);
   },
   byValueCoerced(searchTerm, options) {
-    searchMaybe('valueCoerced', null, searchTerm, options);
+    return searchMaybe('valueCoerced', null, searchTerm, options);
   },
   custom(fn, options) {
-    searchMaybe(fn, null, options);
+    return searchMaybe(fn, null, options);
   },
   debug(enabled) {
     global.DEBUG = enabled;
@@ -26,9 +26,10 @@ export default {
 
 function searchMaybe(util, expected, searchTerm, options) {
   // integrity check arguments
-  !expected || typeof searchTerm == expected ?
-    search(util, searchTerm, options) :
-    console.error(searchTerm, ' must be ', expected);
+  if (!expected || typeof searchTerm == expected) {
+    return search(util, searchTerm, options);
+  }
+  console.error(searchTerm, ' must be ', expected);
 }
 
 function search(util, searchTerm, {obj = global, path} = {}) {

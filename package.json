@@ -13,7 +13,7 @@
     "minify": "minify lib/waldo.js",
     "prepublish": "npm run compile && npm run minify",
     "test": "npm run prepublish && ./node_modules/karma/bin/karma start --single-run",
-    "testc": "./node_modules/karma/bin/karma start --auto-watch"
+    "testc": "npm run prepublish && ./node_modules/karma/bin/karma start --auto-watch"
   },
   "keywords": [
     "javascript",

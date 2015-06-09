@@ -14,7 +14,7 @@ global.testObj = {
 }
 
 global.testObj.circ = {a: 3, b: global.testObj.obj};
-let logSpy, checkConsoleLog, query;
+let logSpy, query;
 
 function testMatches(query, expectedMatches) {
   expect(query.matches.length).toEqual(expectedMatches.length);
@@ -22,8 +22,12 @@ function testMatches(query, expectedMatches) {
     expect(query.matches[i].toString()).toEqual(match);
   });
   if (global.DEBUG) {
-    expect(console.log).toHaveBeenCalledWith(
-      expectedMatches[expectedMatches.length - 1]);
+    if (expectedMatches.length) {
+      expect(console.log).toHaveBeenCalledWith(
+        expectedMatches[expectedMatches.length - 1]);
+    } else {
+      expect(console.log).not.toHaveBeenCalled();
+    }
   }
 }
 
@@ -34,11 +38,6 @@ function testMatches(query, expectedMatches) {
     describe('waldo', () => {
       beforeEach(() => {
         logSpy = spyOn(console, 'log').and.callThrough();
-        checkConsoleLog = str => {
-          if (debug) {
-            expect(console.log).toHaveBeenCalledWith(str);
-          }
-        }
       });
 
       describe('findByName', () => {
@@ -74,10 +73,9 @@ function testMatches(query, expectedMatches) {
       describe('findByType', () => {
         it('should find first class objects types', () => {
           query = find.byType(Array, {obj: global.testObj, path: 'testObj'});
-          // TODO need to check for multiple matches
           testMatches(query, [
-            `testObj.arr1 -> (object) 1,2,3,4,5`,
-            `testObj.arr1 -> (object) ${global.testObj.arr1}`
+            `testObj.arr1 -> (object) ${global.testObj.arr1}`,
+            `testObj.arr2 -> (object) ${global.testObj.arr2}`
           ]);
           logSpy.calls.reset();
           query = find.byType(Function, {obj: global.testObj, path: 'testObj'});
@@ -86,49 +84,55 @@ function testMatches(query, expectedMatches) {
           ]);
         });
         it('should not find primitive types', () => {
-          find.byType(String, {obj: global.testObj, path: 'testObj'});
-          expect(console.log).not.toHaveBeenCalled();
+          query = find.byType(String, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, []);
         });
       });
 
       describe('findByValue', () => {
         it('should find number', () => {
-          find.byValue(3, {obj: global.testObj, path: 'testObj'});
-          checkConsoleLog(
-            'testObj.circ.a -> (number) 3');
+          query = find.byValue(3, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, [
+            'testObj.circ.a -> (number) 3'
+          ]);
         });
         it('should find number and detect circular reference', () => {
-          find.byValue(4, {obj: global.testObj, path: 'testObj'});
-          checkConsoleLog(
-            'testObj.obj.d -> (<testObj.obj>) 4');
+          query = find.byValue(4, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, [
+            'testObj.obj.d -> (<testObj.obj>) 4'
+          ]);
         });
         it('should find complex value', () => {
-          find.byValue(global.testObj.arr2, {obj: global.testObj, path: 'testObj'});
-          checkConsoleLog(
-            `testObj.arr2 -> (object) ${global.testObj.arr2}`);
+          query = find.byValue(global.testObj.arr2, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, [
+            `testObj.arr2 -> (object) ${global.testObj.arr2}`
+          ]);
         });
       });
 
       describe('findByValueCoreced', () => {
         it('should find number equivalent of a string', () => {
-          find.byValueCoerced('3', {obj: global.testObj, path: 'testObj'});
-          checkConsoleLog(
-            'testObj.circ.a -> (number) 3');
+          query = find.byValueCoerced('3', {obj: global.testObj, path: 'testObj'});
+          testMatches(query, [
+            'testObj.circ.a -> (number) 3'
+          ]);
         });
         it('should not find falsey values when non exist', () => {
-          find.byValueCoerced(false, {obj: global.testObj, path: 'testObj'});
-          expect(console.log).not.toHaveBeenCalled();
+          query = find.byValueCoerced(false, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, []);
         });
       });
 
       describe('findByCustomeFilter', () => {
         it('should return custom filter matches', () => {
-          find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'num'));
-          checkConsoleLog('global.testObj.num -> (number) 1');
+          query = find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'num'));
+          testMatches(query, [
+            'global.testObj.num -> (number) 1'
+          ]);
         });
         it('should report no matches when no custom filter matches', () => {
-          find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'pie'));
-          expect(console.log).not.toHaveBeenCalled();
+          query = find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'pie'));
+          testMatches(query, []);
         });
         // TODO: test searchTerm param
       });

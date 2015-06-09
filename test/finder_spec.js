@@ -2,7 +2,7 @@ import src from '../src/finder';
 import waldo from '../lib/waldo';
 import waldoMin from '../lib/waldo.min';
 
-const global = window || global;
+const global = (typeof window == 'object') ? window : global;
 
 // dummy objects
 global.testObj = {

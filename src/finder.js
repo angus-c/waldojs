@@ -1,7 +1,7 @@
 import Query from './query';
 import Match from './match';
 
-const global = window || global;
+const global = (typeof window == 'object') ? window : global;
 
 export default {
   byName(searchTerm, options) {
@@ -42,7 +42,9 @@ function search(util, searchTerm, {obj = global, path} = {}) {
   let queue = [{ obj, path }];
   let seen = [];
 
-  let query = new Query(util, searchTerm, path);
+  debugger;
+
+  let query = new Query({util, searchTerm, path});
 
   // a non-recursive solution to avoid call stack limits
   // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4

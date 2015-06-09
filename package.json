@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/angus-c/waldo.git"
   },
+  "main": "lib/waldo.js",
   "scripts": {
     "compile": "webpack",
     "minify": "minify lib/waldo.js",

@@ -14,7 +14,7 @@ class Match {
   }
 
   log() {
-    console.log(this);
+    console.log(this.toString());
   }
 }
 

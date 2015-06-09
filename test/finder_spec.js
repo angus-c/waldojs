@@ -16,6 +16,17 @@ global.testObj = {
 global.testObj.circ = {a: 3, b: global.testObj.obj};
 let logSpy, checkConsoleLog, query;
 
+function testMatches(query, expectedMatches) {
+  expect(query.matches.length).toEqual(expectedMatches.length);
+  expectedMatches.forEach((match, i) => {
+    expect(query.matches[i].toString()).toEqual(match);
+  });
+  if (global.DEBUG) {
+    expect(console.log).toHaveBeenCalledWith(
+      expectedMatches[expectedMatches.length - 1]);
+  }
+}
+
 [src, waldo, waldoMin].forEach(find => {
   [false, true].forEach(debug => {
     find.debug(debug);
@@ -33,39 +44,46 @@ let logSpy, checkConsoleLog, query;
       describe('findByName', () => {
         it('should find root level object', () => {
           query = find.byName('circ');
-          expect(query.matches.length).toEqual(1);
-          checkConsoleLog(
-            `global.testObj.circ -> (object) ${global.testObj.circ}`);
+          testMatches(query, [
+            `global.testObj.circ -> (object) ${global.testObj.circ}`
+          ]);
         });
 
         it('should find root level array', () => {
-          find.byName('arr1');
-          checkConsoleLog(
-            `global.testObj.arr1 -> (object) ${global.testObj.arr1}`);
+          query = find.byName('arr1');
+          testMatches(query, [
+            `global.testObj.arr1 -> (object) ${global.testObj.arr1}`
+          ]);
         });
 
         it('should find nested property', () => {
-          find.byName('a');
-          checkConsoleLog(
-            'global.testObj.circ.a -> (number) 3');
+          query = find.byName('a');
+          testMatches(query, [
+            'global.testObj.circ.a -> (number) 3'
+          ]);
         });
+
         it('should detect circular references', () => {
-          find.byName('d');
-          checkConsoleLog(
-            'global.testObj.obj.d -> (<global.testObj.obj>) 4');
+          query = find.byName('d');
+          testMatches(query, [
+            'global.testObj.obj.d -> (<global.testObj.obj>) 4'
+          ]);
         });
       });
 
       describe('findByType', () => {
         it('should find first class objects types', () => {
-          find.byType(Array, {obj: global.testObj, path: 'testObj'});
+          query = find.byType(Array, {obj: global.testObj, path: 'testObj'});
           // TODO need to check for multiple matches
-          checkConsoleLog(
-            `testObj.arr1 -> (object) ${global.testObj.arr1}`);
+          testMatches(query, [
+            `testObj.arr1 -> (object) 1,2,3,4,5`,
+            `testObj.arr1 -> (object) ${global.testObj.arr1}`
+          ]);
           logSpy.calls.reset();
-          find.byType(Function, {obj: global.testObj, path: 'testObj'});
-          checkConsoleLog(
-            `testObj.fn -> (function) ${global.testObj.fn}`);
+          query = find.byType(Function, {obj: global.testObj, path: 'testObj'});
+          testMatches(query, [
+            `testObj.fn -> (function) ${global.testObj.fn}`
+          ]);
         });
         it('should not find primitive types', () => {
           find.byType(String, {obj: global.testObj, path: 'testObj'});

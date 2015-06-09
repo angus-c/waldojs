@@ -70,10 +70,9 @@ function search(util, searchTerm, {obj = global, path} = {}) {
           // if match detected, log it
           if (util(searchTerm, obj, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
-            query.addMatch(new Match({path, obj, prop, type}));
-            if (global.DEBUG) {
-              console.log(`${path}.${prop} -> (${type}) ${obj[prop]}`);
-            }
+            const match = new Match({path, obj, prop, type});
+            query.addMatch(match);
+            global.DEBUG && console.log(match.log());
           }
         }
       } catch(e) {

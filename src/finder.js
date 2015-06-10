@@ -1,7 +1,7 @@
 import Query from './query';
 import Match from './match';
 
-const global = (typeof window == 'object') ? window : global;
+const GLOBAL = (typeof window == 'object') ? window : global;
 
 export default {
   byName(searchTerm, options) {
@@ -20,7 +20,7 @@ export default {
     return searchMaybe(fn, null, options);
   },
   debug(enabled) {
-    global.DEBUG = enabled;
+    GLOBAL.DEBUG = enabled;
   }
 }
 
@@ -32,19 +32,17 @@ function searchMaybe(util, expected, searchTerm, options) {
   console.error(searchTerm, ' must be ', expected);
 }
 
-function search(util, searchTerm, {obj = global, path} = {}) {
+function search(util, searchTerm, {obj = GLOBAL, path} = {}) {
   util = searchBy[util] || util;
 
   let data;
   let alreadySeen;
 
-  path || (path = (obj == global) ? 'global' : '');
+  path || (path = (obj == GLOBAL) ? 'GLOBAL' : '');
   let queue = [{ obj, path }];
   let seen = [];
 
-  debugger;
-
-  let query = new Query({util, searchTerm, path});
+  let matches = [];
 
   // a non-recursive solution to avoid call stack limits
   // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4
@@ -73,8 +71,8 @@ function search(util, searchTerm, {obj = global, path} = {}) {
           if (util(searchTerm, obj, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
             const match = new Match({path, obj, prop, type});
-            query.addMatch(match);
-            global.DEBUG && console.log(match.log());
+            matches.push(match);
+            GLOBAL.DEBUG && console.log(match.log());
           }
         }
       } catch(e) {
@@ -83,7 +81,7 @@ function search(util, searchTerm, {obj = global, path} = {}) {
     }
   }
 
-  return query;
+  return matches;
 }
 
 // based on http://stackoverflow.com/a/6713782

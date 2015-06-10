@@ -1,4 +1,4 @@
-import src from '../src/finder';
+import src from '../src/waldo';
 import waldo from '../lib/waldo';
 import waldoMin from '../lib/waldo.min';
 
@@ -31,8 +31,8 @@ function testMatches(matches, expectedMatches) {
   }
 }
 
-[src, waldo, waldoMin].forEach(find => {
-  [false, true].forEach(debug => {
+[waldo, waldoMin].forEach(find => {
+  [true, false].forEach(debug => {
     find.debug(debug);
 
     describe('waldo', () => {
@@ -123,7 +123,7 @@ function testMatches(matches, expectedMatches) {
         });
       });
 
-      describe('findByCustomeFilter', () => {
+      describe('findByCustomFilter', () => {
         it('should return custom filter matches', () => {
           matches = find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'num'));
           testMatches(matches, [

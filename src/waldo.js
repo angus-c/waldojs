@@ -1,6 +1,3 @@
-import Query from './query';
-import Match from './match';
-
 const GLOBAL = (typeof window == 'object') ? window : global;
 
 export default {
@@ -129,3 +126,23 @@ const searchBy = {
     return obj[prop] == searchTerm;
   }
 };
+
+class Match {
+  constructor(props) {
+    Object.assign(this, props);
+  }
+
+  toString() {
+    let {path, prop, type} = this;
+    return `${path}.${prop} -> (${type}) ${this.getValue()}`;
+  }
+
+  getValue() {
+    let {obj, prop} = this;
+    return obj[prop];
+  }
+
+  log() {
+    console.log(this.toString());
+  }
+}

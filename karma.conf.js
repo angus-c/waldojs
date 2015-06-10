@@ -50,7 +50,6 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
 
     preprocessors: {
-      'lib/finder.es6*.js': ['webpack', 'sourcemap'],
       'src/*.js': ['webpack', 'sourcemap'],
       'test/*spec.js': ['webpack', 'sourcemap']
     },
@@ -69,9 +68,8 @@ module.exports = function (config) {
           {
             // es6 JavaScript
             test: /\.js$/,
-            loader: 'babel-loader',
-            exclude: 'node_modules',
-            query: { cacheDirectory: true }
+            loader: 'babel-loader?cacheDirectory=true',
+            exclude: /node_modules/
           }
         ]
       },

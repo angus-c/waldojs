@@ -1,4 +1,3 @@
-import src from '../src/waldo';
 import waldo from '../lib/waldo';
 import waldoMin from '../lib/waldo.min';
 
@@ -31,7 +30,7 @@ function testMatches(matches, expectedMatches) {
   }
 }
 
-[waldo, waldoMin].forEach(find => {
+[waldo, waldoMin, GLOBAL.waldo].forEach(find => {
   [true, false].forEach(debug => {
     find.debug(debug);
 

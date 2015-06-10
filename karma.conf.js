@@ -6,6 +6,7 @@ module.exports = function (config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'lib/waldobundle.min.js',
       'test/finder_spec.js'
     ],
 

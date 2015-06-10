@@ -1,6 +1,6 @@
 const GLOBAL = (typeof window == 'object') ? window : global;
 
-export default {
+const find = {
   byName(searchTerm, options) {
     return searchMaybe('propName', 'string', searchTerm, options);
   },
@@ -17,6 +17,7 @@ export default {
     return searchMaybe(fn, null, options);
   },
   debug(enabled) {
+    // TODO: automate this according to how find is called
     GLOBAL.DEBUG = enabled;
   }
 }
@@ -146,3 +147,8 @@ class Match {
     console.log(this.toString());
   }
 }
+
+// for console running
+GLOBAL.waldo = find;
+
+export default find;

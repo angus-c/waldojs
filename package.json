@@ -10,9 +10,10 @@
   },
   "main": "lib/waldo.js",
   "scripts": {
+    "bundle": "webpack",
     "compile": "babel --optional runtime src --out-dir lib",
-    "minify": "minify lib/waldo.js",
-    "prepublish": "npm run compile && npm run minify",
+    "minify": "minify lib/waldo.js && minify lib/waldobundle.js",
+    "prepublish": "npm run compile && npm run bundle && npm run minify",
     "test": "npm run prepublish && ./node_modules/karma/bin/karma start --single-run",
     "testc": "npm run prepublish && ./node_modules/karma/bin/karma start --auto-watch"
   },

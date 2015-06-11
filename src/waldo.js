@@ -2,32 +2,31 @@ const GLOBAL = (typeof window == 'object') ? window : global;
 
 const find = {
   byName(searchTerm, options) {
-    return searchMaybe('propName', 'string', searchTerm, options);
+    return this.searchMaybe('propName', 'string', searchTerm, options);
   },
   byType(searchTerm, options) {
-    return searchMaybe('type', 'function', searchTerm, options);
+    return this.searchMaybe('type', 'function', searchTerm, options);
   },
   byValue(searchTerm, options) {
-    return searchMaybe('value', null, searchTerm, options);
+    return this.searchMaybe('value', null, searchTerm, options);
   },
   byValueCoerced(searchTerm, options) {
-    return searchMaybe('valueCoerced', null, searchTerm, options);
+    return this.searchMaybe('valueCoerced', null, searchTerm, options);
   },
   custom(fn, options) {
-    return searchMaybe(fn, null, options);
+    return this.searchMaybe(fn, null, options);
   },
-  debug(enabled) {
-    // TODO: automate this according to how find is called
-    GLOBAL.DEBUG = enabled;
-  }
-}
-
-function searchMaybe(util, expected, searchTerm, options) {
-  // integrity check arguments
-  if (!expected || typeof searchTerm == expected) {
+  searchMaybe(util, expected, searchTerm, options) {
+    // integrity check arguments
+    if (expected && typeof searchTerm != expected) {
+      throw new Error(`${searchTerm} must be ${expected}`);
+    }
+    // only console.log if we are the global function
+    if (this === GLOBAL.waldo) {
+      GLOBAL.DEBUG = true;
+    }
     return search(util, searchTerm, options);
   }
-  console.error(searchTerm, ' must be ', expected);
 }
 
 function search(util, searchTerm, {obj = GLOBAL, path} = {}) {
@@ -149,6 +148,6 @@ class Match {
 }
 
 // for console running
-GLOBAL.waldo = find;
+GLOBAL.waldo = Object.assign({}, find, {debug: true});
 
 export default find;

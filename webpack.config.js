@@ -10,8 +10,10 @@ module.exports = {
             // es6 JavaScript
             test: /\.js$/,
             loader: 'babel-loader',
-            exclude: 'node_modules',
-            query: { cacheDirectory: true }
+            exclude: /node_modules/,
+            query: {
+              optional: ['runtime']
+            }
           }
         ],
         watch: true

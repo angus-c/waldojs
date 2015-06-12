@@ -69,12 +69,10 @@ function search(util, searchTerm, {obj = GLOBAL, path} = {}) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
             const match = new Match({path, obj, prop, type});
             matches.push(match);
-            GLOBAL.DEBUG && console.log(match.log());
+            GLOBAL.DEBUG && match.log();
           }
         }
-      } catch(e) {
-        console.warn(e);
-      }
+      } catch(e) {}
     }
   }
 

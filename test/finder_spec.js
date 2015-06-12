@@ -78,53 +78,53 @@ function testMatches(matches, expectedMatches) {
 
     describe('findByType', () => {
       it('should find first class objects types', () => {
-        matches = find.byType(Array, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byType(Array, GLOBAL.testObj);
         testMatches(matches, [
-          `testObj.arr1 -> (object) ${GLOBAL.testObj.arr1}`,
-          `testObj.arr2 -> (object) ${GLOBAL.testObj.arr2}`
+          `SRC.arr1 -> (object) ${GLOBAL.testObj.arr1}`,
+          `SRC.arr2 -> (object) ${GLOBAL.testObj.arr2}`
         ]);
         logSpy.calls.reset();
-        matches = find.byType(Function, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byType(Function, GLOBAL.testObj);
         testMatches(matches, [
-          `testObj.fn -> (function) ${GLOBAL.testObj.fn}`
+          `SRC.fn -> (function) ${GLOBAL.testObj.fn}`
         ]);
       });
       it('should not find primitive types', () => {
-        matches = find.byType(String, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byType(String, GLOBAL.testObj);
         testMatches(matches, []);
       });
     });
 
     describe('findByValue', () => {
       it('should find number', () => {
-        matches = find.byValue(3, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byValue(3, GLOBAL.testObj);
         testMatches(matches, [
-          'testObj.circ.a -> (number) 3'
+          'SRC.circ.a -> (number) 3'
         ]);
       });
       it('should find number and detect circular reference', () => {
-        matches = find.byValue(4, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byValue(4, GLOBAL.testObj);
         testMatches(matches, [
-          'testObj.obj.d -> (<testObj.obj>) 4'
+          'SRC.obj.d -> (<SRC.obj>) 4'
         ]);
       });
       it('should find complex value', () => {
-        matches = find.byValue(GLOBAL.testObj.arr2, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byValue(GLOBAL.testObj.arr2, GLOBAL.testObj);
         testMatches(matches, [
-          `testObj.arr2 -> (object) ${GLOBAL.testObj.arr2}`
+          `SRC.arr2 -> (object) ${GLOBAL.testObj.arr2}`
         ]);
       });
     });
 
     describe('findByValueCoreced', () => {
       it('should find number equivalent of a string', () => {
-        matches = find.byValueCoerced('3', {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byValueCoerced('3', GLOBAL.testObj);
         testMatches(matches, [
-          'testObj.circ.a -> (number) 3'
+          'SRC.circ.a -> (number) 3'
         ]);
       });
       it('should not find falsey values when non exist', () => {
-        matches = find.byValueCoerced(false, {obj: GLOBAL.testObj, path: 'testObj'});
+        matches = find.byValueCoerced(false, GLOBAL.testObj);
         testMatches(matches, []);
       });
     });

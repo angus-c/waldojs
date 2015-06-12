@@ -1,42 +1,42 @@
 const GLOBAL = (typeof window == 'object') ? window : global;
 
 const find = {
-  byName(searchTerm, options) {
-    return this.searchMaybe('propName', 'string', searchTerm, options);
+  byName(what, where) {
+    return this.searchMaybe('propName', 'string', what, where);
   },
-  byType(searchTerm, options) {
-    return this.searchMaybe('type', 'function', searchTerm, options);
+  byType(what, where) {
+    return this.searchMaybe('type', 'function', what, where);
   },
-  byValue(searchTerm, options) {
-    return this.searchMaybe('value', null, searchTerm, options);
+  byValue(what, where) {
+    return this.searchMaybe('value', null, what, where);
   },
-  byValueCoerced(searchTerm, options) {
-    return this.searchMaybe('valueCoerced', null, searchTerm, options);
+  byValueCoerced(what, where) {
+    return this.searchMaybe('valueCoerced', null, what, where);
   },
-  custom(fn, options) {
-    return this.searchMaybe(fn, null, options);
+  custom(fn, where) {
+    return this.searchMaybe(fn, null, where);
   },
-  searchMaybe(util, expected, searchTerm, options) {
+  searchMaybe(util, expected, what, where) {
     // integrity check arguments
-    if (expected && typeof searchTerm != expected) {
-      throw new Error(`${searchTerm} must be ${expected}`);
+    if (expected && typeof what != expected) {
+      throw new Error(`${what} must be ${expected}`);
     }
     // only console.log if we are the global function
     if (this === GLOBAL.waldo) {
       GLOBAL.DEBUG = true;
     }
-    return search(util, searchTerm, options);
+    return search(util, what, where);
   }
 }
 
-function search(util, searchTerm, {obj = GLOBAL, path} = {}) {
+function search(util, what, where = GLOBAL) {
   util = searchBy[util] || util;
 
   let data;
   let alreadySeen;
 
-  path || (path = (obj == GLOBAL) ? 'GLOBAL' : '');
-  let queue = [{ obj, path }];
+  const path = (where == GLOBAL) ? 'GLOBAL' : 'SRC';
+  let queue = [{ where, path }];
   let seen = [];
 
   let matches = [];
@@ -44,30 +44,30 @@ function search(util, searchTerm, {obj = GLOBAL, path} = {}) {
   // a non-recursive solution to avoid call stack limits
   // http://www.jslab.dk/articles/non.recursive.preorder.traversal.part4
   while ((data = queue.pop())) {
-    let {obj, path} = data;
+    let {where, path} = data;
 
-    for (const prop in obj) {
+    for (const prop in where) {
       // IE may throw errors when accessing/coercing some properties
       try {
-        if (obj.hasOwnProperty(prop)) {
-          // inspect objects
-          if ([obj[prop]] == '[object Object]') {
+        if (where.hasOwnProperty(prop)) {
+          // inspect whereects
+          if ([where[prop]] == '[object Object]') {
             // check if already searched (prevents circular references)
             for (
               var i = -1;
-              seen[++i] && !(alreadySeen = like(seen[i].obj, obj[prop]) && seen[i]);
+              seen[++i] && !(alreadySeen = like(seen[i].where, where[prop]) && seen[i]);
             );
             // add to stack
             if (!alreadySeen) {
-              data = { 'obj': obj[prop], 'path': `${path}.${prop}`};
+              data = { 'where': where[prop], 'path': `${path}.${prop}`};
               queue.push(data);
               seen.push(data);
             }
           }
-          // if match detected, log it
-          if (util(searchTerm, obj, prop)) {
-            const type = alreadySeen ? `<${alreadySeen.path}>` : typeof obj[prop];
-            const match = new Match({path, obj, prop, type});
+          // if match detected, push it.
+          if (util(what, where, prop)) {
+            const type = alreadySeen ? `<${alreadySeen.path}>` : typeof where[prop];
+            const match = new Match({path, where, prop, type});
             matches.push(match);
             GLOBAL.DEBUG && match.log();
           }
@@ -111,17 +111,17 @@ function like(x, y) {
 }
 
 const searchBy = {
-  propName(searchTerm, obj, prop) {
-    return searchTerm == prop;
+  propName(what, where, prop) {
+    return what == prop;
   },
-  type(searchTerm, obj, prop) {
-    return obj[prop] instanceof searchTerm;
+  type(what, where, prop) {
+    return where[prop] instanceof what;
   },
-  value(searchTerm, obj, prop) {
-    return obj[prop] === searchTerm;
+  value(what, where, prop) {
+    return where[prop] === what;
   },
-  valueCoerced(searchTerm, obj, prop) {
-    return obj[prop] == searchTerm;
+  valueCoerced(what, where, prop) {
+    return where[prop] == what;
   }
 };
 
@@ -136,8 +136,8 @@ class Match {
   }
 
   getValue() {
-    let {obj, prop} = this;
-    return obj[prop];
+    let {where, prop} = this;
+    return where[prop];
   }
 
   log() {

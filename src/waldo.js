@@ -50,7 +50,7 @@ function search(util, what, where = GLOBAL) {
       // IE may throw errors when accessing/coercing some properties
       try {
         if (where.hasOwnProperty(prop)) {
-          // inspect whereects
+          // inspect objects
           if ([where[prop]] == '[object Object]') {
             // check if already searched (prevents circular references)
             for (
@@ -59,7 +59,7 @@ function search(util, what, where = GLOBAL) {
             );
             // add to stack
             if (!alreadySeen) {
-              data = { 'where': where[prop], 'path': `${path}.${prop}`};
+              data = { where: where[prop], path: `${path}.${prop}`};
               queue.push(data);
               seen.push(data);
             }
@@ -67,7 +67,8 @@ function search(util, what, where = GLOBAL) {
           // if match detected, push it.
           if (util(what, where, prop)) {
             const type = alreadySeen ? `<${alreadySeen.path}>` : typeof where[prop];
-            const match = new Match({path, where, prop, type});
+            const match = new Match(
+              {path: `${path}.${prop}`, obj: where, prop, type});
             matches.push(match);
             GLOBAL.DEBUG && match.log();
           }
@@ -131,13 +132,13 @@ class Match {
   }
 
   toString() {
-    let {path, prop, type} = this;
-    return `${path}.${prop} -> (${type}) ${this.getValue()}`;
+    let {path, type} = this;
+    return `${path} -> (${type}) ${this.getValue()}`;
   }
 
   getValue() {
-    let {where, prop} = this;
-    return where[prop];
+    let {obj, prop} = this;
+    return obj[prop];
   }
 
   log() {

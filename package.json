@@ -12,8 +12,8 @@
     "compile": "babel --optional runtime src --out-dir lib",
     "minify": "minify lib/finder.js",
     "prepublish": "npm run compile && npm run minify && cp src/finder.js lib/finder.es6.js",
-    "test": "npm run prepublish && ./node_modules/karma/bin/karma start --single-run",
-    "testc": "./node_modules/karma/bin/karma start --auto-watch"
+    "test": "npm run prepublish && karma start --single-run",
+    "testc": "npm run prepublish && karma start --auto-watch"
   },
   "keywords": [
     "javascript",

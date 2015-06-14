@@ -199,7 +199,7 @@ will log...
 GLOBAL.c.z -> (<GLOBAL.a>) {z: a}
 ```
 
-Thanks to [John-David Dalton](https://github.com/jdalton) for adding circular reference detection.
+Thanks to [John-David Dalton](https://github.com/jdalton) for adding circular reference detection as well as providing some early refactor commits.
 
 ###Testing
 

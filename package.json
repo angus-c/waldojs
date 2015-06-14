@@ -1,12 +1,12 @@
 {
-  "name": "waldo",
+  "name": "waldojs",
   "version": "0.1.0",
   "description": "find objects in the property tree",
   "author": "Angus Croll",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/angus-c/waldo.git"
+    "url": "https://github.com/angus-c/waldojs.git"
   },
   "main": "lib/waldo.js",
   "scripts": {

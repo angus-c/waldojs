@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/angus-c/waldo.png?branch=master)](http://travis-ci.org/angus-c/waldojs)
 
-#WaldoJS
+# WaldoJS
 
 I got frustrated looking for specific properties and values within JavaScript object trees — so I created a utility to do it for me.
 
@@ -46,9 +46,9 @@ value; // [the function]
 type; // 'function'
 ```
 
-##Installation and Usage
+## Installation and Usage
 
-###1. Using the npm module
+### 1. Using the npm module
 
 ```
 npm install waldojs
@@ -66,14 +66,13 @@ or
 import  waldo  from 'waldojs'; // ES 6
 ```
 
-###2. Standalone
+### 2. Standalone
 
 Clone this repo and run `make build` to generate the standalone bundles `waldobundle.js` and `waldobundle.min.js`. The global `waldo` object will now be available to you.
 
-###3. Using the Bookmarklet in the Browser Console
+### 3. Using the Bookmarklet in the Browser Console
 
-By using the supplied bookmarklet (`lib/bookmarklet.txt`) you can type waldo commands directly in the console. When run in the console waldo auto-logs all matches.
-
+By using the supplied bookmarklet (`lib/bookmarklet.txt` - you'll need to run `make build` if it isn't there) you can type waldo commands directly in the console.  When run in the console waldo auto-logs all matches.
 
 ## Output
 
@@ -181,7 +180,7 @@ waldo.custom(function(what, obj, prop) {
   SRC.carrots.cleaned -> (boolean) true
 ```
 
-###Circular References
+## Circular References
 
 Waldo detects circular references and cites them:
 
@@ -199,7 +198,7 @@ GLOBAL.c.z -> (<GLOBAL.a>) {z: a}
 
 Thanks to [John-David Dalton](https://github.com/jdalton) for adding circular reference detection as well as providing some early refactor commits.
 
-###Testing
+## Testing
 
 To test both module and the standalone bundles:
 ```

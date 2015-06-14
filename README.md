@@ -11,13 +11,14 @@ Waldo lets you search gloablly or within an object tree. You can search by prope
 ### byName
 
 ```
-// ES 5
 // Find properties named 'read' anywhere
 var waldo = require('waldo');
 
 var matches = waldo.byName('read');
-matches[0].path; // => 'GLOBAL.module.exports.repl.inputStream.read'
-matches[0].type; // => 'function'
+matches.length; // 1
+matches[0].value; // [the function]
+matches[0].log(); // =>
+  'GLOBAL.module.exports.repl.inputStream.read -> (function) [object Function]'
 ```
 
 ```

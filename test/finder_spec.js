@@ -85,7 +85,7 @@ function testMatches(matches, expectedMatches) {
         logSpy.calls.reset();
         matches = find.byType(Function, GLOBAL.testObj);
         testMatches(matches, [
-          `SRC.fn -> (function) ${GLOBAL.testObj.fn}`
+          `SRC.fn -> (function) [object Function]`
         ]);
       });
       it('should not find primitive types', () => {

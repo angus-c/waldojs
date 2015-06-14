@@ -1,6 +1,6 @@
 {
   "name": "waldojs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Find objects in a JS object tree",
   "author": "Angus Croll",
   "license": "MIT",

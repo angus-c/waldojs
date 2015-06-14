@@ -12,7 +12,7 @@ export default find = {
     searchMaybe('valueCoerced', null, searchTerm, options);
   },
   custom(fn, options) {
-    searchMaybe(fn, null, options);
+    searchMaybe(fn, null, null, options);
   }
 }
 

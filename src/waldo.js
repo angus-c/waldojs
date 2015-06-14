@@ -14,7 +14,7 @@ const find = {
     return this.searchMaybe('valueCoerced', null, what, where);
   },
   custom(fn, where) {
-    return this.searchMaybe(fn, null, where);
+    return this.searchMaybe(fn, null, null, where);
   },
   searchMaybe(util, expected, what, where) {
     // integrity check arguments

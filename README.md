@@ -63,7 +63,7 @@ waldo.byValueCoerced(false); // =>
   etc..
 ```
 
-### by type
+### byType
 ```
 let a = {
   aa: ['x', 'y', 'z'],
@@ -76,6 +76,28 @@ let a = {
 waldo.byType(Array, a); // =>
   SRC.aa -> (object) x,y,z
   SRC.bb.bbb -> (object) 1,2,3
+```
+
+### custom
+
+```
+// find all true values beginning with 'c'
+var vegetables = {
+  carrots: {
+    chopped: false,
+    cleaned: true
+  }
+  leaks: {
+    chopped: true,
+    cleaned: false
+  }
+};
+
+waldo.custom(function(what, obj, prop) {
+  return (obj[prop] === true) && (!prop.indexOf('c'));
+}, comestibles); // =>
+  SRC.leaks.chopped -> (boolean) true
+  SRC.carrots.cleaned -> (boolean) true
 ```
 
 ##Installation

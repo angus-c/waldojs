@@ -72,8 +72,7 @@ Clone this repo and run `make build` to generate the standalone bundles `waldobu
 
 ### 3. Using the Bookmarklet in the Browser Console
 
-By using the supplied bookmarklet (`lib/bookmarklet.txt`) you can type waldo commands directly in the console. When run in the console waldo auto-logs all matches.
-
+By using the supplied bookmarklet (`lib/bookmarklet.txt` - you'll need to run `make build` if it isn't there) you can type waldo commands directly in the console.  When run in the console waldo auto-logs all matches.
 
 ## Output
 

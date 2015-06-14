@@ -10,10 +10,12 @@
   },
   "main": "lib/waldo.js",
   "scripts": {
+    "bookmarklet": "cat src/bm/pre.txt lib/waldobundle.min.js src/bm/post.txt > lib/bookmarklet.txt",
     "bundle": "webpack",
     "compile": "babel --optional runtime src --out-dir lib",
-    "minify": "minify lib/waldo.js && minify lib/waldobundle.js",
-    "prepublish": "npm run compile && npm run bundle && npm run minify",
+    "env": "env",
+    "minify": "uglifyjs lib/waldobundle.js -o lib/waldobundle.min.js",
+    "prepublish": "npm run compile && npm run bundle && npm run minify && npm run bookmarklet",
     "test": "npm run prepublish && karma start --single-run",
     "testc": "npm run prepublish && karma/bin/karma start --auto-watch"
   },
@@ -21,6 +23,8 @@
     "javascript",
     "find",
     "match",
+    "node",
+    "properties",
     "search"
   ],
   "devDependencies": {
@@ -37,6 +41,7 @@
     "karma-jasmine": "^0.3.5",
     "karma-sourcemap-loader": "^0.3.4",
     "karma-webpack": "^1.5.0",
-    "minifier": "^0.6.2"
+    "minifier": "^0.6.2",
+    "uglify-js": "^2.4.23"
   }
 }

@@ -1,5 +1,4 @@
 import waldo from '../lib/waldo';
-import waldoMin from '../lib/waldo.min';
 
 const GLOBAL = (typeof window == 'object') ? window : global;
 
@@ -29,7 +28,7 @@ function testMatches(matches, expectedMatches) {
   }
 }
 
-[waldo, waldoMin, GLOBAL.waldo].forEach(find => {
+[waldo, GLOBAL.waldo].forEach(find => {
   describe('waldo', () => {
     beforeEach(() => {
       GLOBAL.DEBUG = null;

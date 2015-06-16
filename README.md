@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/angus-c/waldo.png?branch=master)](http://travis-ci.org/angus-c/waldojs)
+[![Build Status](https://travis-ci.org/angus-c/waldojs.png?branch=master)](http://travis-ci.org/angus-c/waldojs) [![npm version](http://img.shields.io/npm/v/waldojs.svg)](https://npmjs.org/package/waldojs)
 
 # WaldoJS
 

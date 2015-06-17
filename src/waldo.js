@@ -13,8 +13,8 @@ const find = {
   byValueCoerced(what, where) {
     return this.searchMaybe('valueCoerced', null, what, where);
   },
-  custom(fn, where) {
-    return this.searchMaybe(fn, null, null, where);
+  custom(fn, what, where) {
+    return this.searchMaybe(fn, null, what, where);
   },
   searchMaybe(util, expected, what, where) {
     // integrity check arguments

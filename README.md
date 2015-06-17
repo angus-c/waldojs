@@ -160,6 +160,11 @@ waldo.byType(Array, a); // =>
 
 ### Custom
 
+The `waldo.custom` method takes 3 arguments:
+* `fn` - function specifying match criteria
+* `what` (optional) - search mask
+* `where` (optional) -where to search
+
 ```js
 // find all true values beginning with 'c'
 var vegetables = {
@@ -175,7 +180,7 @@ var vegetables = {
 
 waldo.custom(function(what, obj, prop) {
   return (obj[prop] === true) && (!prop.indexOf('c'));
-}, vegetables); // =>
+}, null, vegetables); // =>
   SRC.leaks.chopped -> (boolean) true
   SRC.carrots.cleaned -> (boolean) true
 ```

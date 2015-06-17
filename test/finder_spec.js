@@ -128,18 +128,33 @@ function testMatches(matches, expectedMatches) {
       });
     });
 
-    describe('findByCustomFilter', () => {
-      it('should return custom filter matches', () => {
-        matches = find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'num'));
+    describe('findByCustomFunction', () => {
+      it('should return custom function matches', () => {
+        matches = find.custom((what, obj, prop) => (obj[prop] === 1) && (prop == 'num'));
         testMatches(matches, [
           'GLOBAL.testObj.num -> (number) 1'
         ]);
       });
       it('should report no matches when no custom filter matches', () => {
-        matches = find.custom((searchTerm, obj, prop) => (obj[prop] === 1) && (prop == 'pie'));
+        matches = find.custom((what, obj, prop) => (obj[prop] === 1) && (prop == 'pie'));
         testMatches(matches, []);
       });
-      // TODO: test searchTerm param
+      it('should custom search within given object', () => {
+        matches = find.custom(
+          (what, obj, prop) => {
+            return (
+              Array.isArray(obj[prop]) &&
+              typeof obj[prop][0] == 'string'
+            );
+          },
+          null,
+          GLOBAL.testObj
+        );
+        testMatches(matches, [
+          'SRC.arr2 -> (object) a,b,c'
+        ]);
+      });
+      // TODO: test what param
     });
   });
 });

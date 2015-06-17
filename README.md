@@ -160,7 +160,7 @@ waldo.byType(Array, a); // =>
 
 ### Custom
 
-The `waldo.custom` method takes 3 arguments:
+The `custom` method takes 3 arguments:
 * `fn` - function specifying match criteria
 * `what` (optional) - search mask
 * `where` (optional) -where to search

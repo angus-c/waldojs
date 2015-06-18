@@ -17,7 +17,7 @@
     "minify": "uglifyjs lib/waldobundle.js -o lib/waldobundle.min.js",
     "prepublish": "npm run compile && npm run bundle && npm run minify && npm run bookmarklet",
     "test": "npm run prepublish && karma start --single-run",
-    "testc": "npm run prepublish && karma/bin/karma start --auto-watch"
+    "testc": "npm run prepublish && karma start --auto-watch"
   },
   "keywords": [
     "javascript",

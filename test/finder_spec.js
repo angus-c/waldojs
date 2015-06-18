@@ -154,7 +154,32 @@ function testMatches(matches, expectedMatches) {
           'SRC.arr2 -> (object) a,b,c'
         ]);
       });
+      it('should accept a `what` param', () => {
+        const testObj = {a: {a: 3, b: {c: 4, a: {a: {b: 4}}}}};
+        matches = find.custom(
+          (what, obj, prop) => {
+            let {a: {b: x}} = obj[prop];
+            return x === 4;
+          },
+          null,
+          testObj
+        );
+        testMatches(matches, [
+          'SRC.a.b.a -> (object) [object Object]'
+        ]);
+      });
       // TODO: test what param
     });
   });
 });
+
+/*
+node repl crib
+
+var waldo = require('waldojs');
+var x = {a: {a1: 2, b1: {a2: 8, b2: {a3: 4, b3: 19}}}};
+waldo.custom(function(w, o, p) {
+  let {a: {b: x}} = obj[prop];
+  return x === w;
+}, 4, obj);
+*/

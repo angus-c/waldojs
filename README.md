@@ -22,28 +22,19 @@ waldo.byValue(10).log(); // =>
   GLOBAL.module.exports.repl.rli._maxListeners -> (number) 10
   GLOBAL.module.exports.repl.outputStream._maxListeners -> (number) 10
   GLOBAL.module.exports.repl.inputStream._maxListeners -> (number) 10
-
-// get property names in myModule containing 'select'
-var matches = waldo.custom(function(what, obj, prop) {
-  return prop.indexOf('select') > -1);
-}, myModule);
-
-matches.log(); // =>
-  SRC.selectUser -> (function) [object Function]
-  SRC.data.userIsSelected -> (boolean) false
-  SRC.data.selectionRequired -> (boolean) true
 ```
 
-Most of these examples are written in ES 5, but (obviously) if you use a transpiler like babel you could interact with waldo in ES 6. (Waldo is itself written in ES 6).
+If you use a transpiler like babel you could interact with waldo in ES 6. (Waldo is itself written in ES 6).
 
-```js
-import waldo from 'waldojs';
-import React from 'react';
-
-const {path, value, type} = waldo.byName('oneOfType', react);
-path; // 'SRC.PropTypes.oneOfType'
-value; // [the function]
-type; // 'function'
+```js 
+// use a destructure assignment to find a nested pattern
+const obj = {a: {a: 3, b: {c: 4, a: {a: {b: 4}}}}};
+matches = find.custom(
+  (what, obj, prop) => {
+  let {a: {b: x}} = obj[prop];
+  return x === 4;
+}, obj);
+matches.log(); // 'SRC.a.b.a -> (object) {a: {b: 4}}'
 ```
 
 ## Installation and Usage

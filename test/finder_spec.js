@@ -147,21 +147,19 @@ function testMatches(matches, expectedMatches) {
               typeof obj[prop][0] == 'string'
             );
           },
-          null,
           GLOBAL.testObj
         );
         testMatches(matches, [
           'SRC.arr2 -> (object) a,b,c'
         ]);
       });
-      it('should accept a `what` param', () => {
+      it('should support destructuring predicates', () => {
         const testObj = {a: {a: 3, b: {c: 4, a: {a: {b: 4}}}}};
         matches = find.custom(
           (what, obj, prop) => {
             let {a: {b: x}} = obj[prop];
             return x === 4;
           },
-          null,
           testObj
         );
         testMatches(matches, [

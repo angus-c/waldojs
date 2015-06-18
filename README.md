@@ -160,9 +160,8 @@ waldo.byType(Array, a); // =>
 
 ### Custom
 
-The `custom` method takes 3 arguments:
+The `custom` method takes 2 arguments:
 * `fn` - function specifying match criteria
-* `what` (optional) - search mask
 * `where` (optional) -where to search
 
 ```js
@@ -180,7 +179,7 @@ var vegetables = {
 
 waldo.custom(function(what, obj, prop) {
   return (obj[prop] === true) && (!prop.indexOf('c'));
-}, null, vegetables); // =>
+}, vegetables); // =>
   SRC.leaks.chopped -> (boolean) true
   SRC.carrots.cleaned -> (boolean) true
 ```

@@ -15,7 +15,7 @@ var waldo = require('waldojs');
 
 // find react properties named 'oneOfType'
 var React = require('react');
-var matches = waldo.byName('oneOfType', react);  
+var matches = waldo.byName('oneOfType', React);  
 
 matches[0].path; // 'SRC.PropTypes.oneOfType'
 matches[0].value; // [the function]

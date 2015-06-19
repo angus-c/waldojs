@@ -15,7 +15,8 @@ var waldo = require('waldojs');
 
 // find react properties named 'oneOfType'
 var React = require('react');
-var matches = waldo.byName('oneOfType', react);
+var matches = waldo.byName('oneOfType', react);  
+
 matches[0].path; // 'SRC.PropTypes.oneOfType'
 matches[0].value; // [the function]
 matches[0].type; // 'function'
@@ -37,7 +38,7 @@ If you use a transpiler like babel you could interact with waldo in ES 6. (Waldo
 ```js
 // use a destructure assignment to find a nested pattern
 const obj = {a: {a: 3, b: {c: 4, a: {a: {b: 4}}}}};
-matches = find.custom(
+const matches = find.custom(
   (what, obj, prop) => {
   let {a: {b: x}} = obj[prop];
   return x === 4;

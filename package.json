@@ -42,6 +42,7 @@
     "uglify-js": "^2.5.0"
   },
   "dependencies": {
-    "babel-runtime": "^5.5.8"
+    "babel-runtime": "^5.5.8",
+    "just-compare": "^1.1.19"
   }
 }

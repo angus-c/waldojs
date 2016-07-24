@@ -1,3 +1,5 @@
+import compare from 'just-compare';
+
 const GLOBAL = (typeof window == 'object') ? window : global;
 
 const find = {
@@ -58,7 +60,7 @@ function search(util, what, where = GLOBAL) {
             // check if already searched (prevents circular references)
             for (
               var i = -1;
-              seen[++i] && !(alreadySeen = like(seen[i].where, where[prop]) && seen[i]);
+              seen[++i] && !(alreadySeen = compare(seen[i].where, where[prop]) && seen[i]);
             );
             // add to stack
             if (!alreadySeen) {
@@ -81,37 +83,6 @@ function search(util, what, where = GLOBAL) {
   }
 
   return matches;
-}
-
-// based on http://stackoverflow.com/a/6713782
-function like(x, y) {
-  if (x === y) {
-    return true;
-  }
-  if (!(x instanceof Object) || !(y instanceof Object)) {
-    return false;
-  }
-  if (x.constructor !== y.constructor) {
-    return false;
-  }
-  for (var p in x) {
-    if (!x.hasOwnProperty(p)) continue;
-    if (!y.hasOwnProperty(p)) {
-      return false;
-    }
-    if (x[p] === y[p]) continue;
-    if (typeof x[p] != 'object') {
-      return false;
-    }
-    if (!like(x[p], y[p])) {
-      return false;
-    }
-  }
-  for (p in y) {
-    if (y.hasOwnProperty(p) && !x.hasOwnProperty(p)) {
-      return false;
-    }
-  }
 }
 
 const searchBy = {
